@@ -1,0 +1,28 @@
+project_name: cinema-ticket-demand-forecasting
+random_seed: 42
+
+data:
+  raw_path: data/raw/cinemaTicket_Ref.csv
+  processed_path: data/processed/shows.parquet
+  kaggle_dataset: arashnic/cinema-ticket
+
+forecast:
+  lag_days: 2            # features may only use ticket sales up to (show_date - lag_days)
+  interval_coverage: 0.80
+  recal_window_days: 28  # trailing window of observed sales used to recalibrate level & intervals
+
+split:                   # chronological, no shuffling
+  train_end: "2018-08-23"
+  val_end: "2018-09-29"  # test = everything after val_end
+
+backtest:
+  window_days: 35
+  n_folds: 4
+
+cost:                    # asymmetric operational cost per ticket of error
+  under_forecast: 1.5    # queues / sold-out truncation
+  over_forecast: 1.0     # idle staff / wasted screen
+
+staffing:                # illustrative placeholders - replace with real ratios
+  tickets_per_staff: 120
+  min_staff: 2

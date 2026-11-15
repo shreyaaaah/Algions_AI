@@ -1,0 +1,409 @@
+{
+  "config": {
+    "lag_days": 2,
+    "interval_target": 0.8
+  },
+  "split": {
+    "train": {
+      "rows": 100275,
+      "start": "2018-02-21",
+      "end": "2018-08-23",
+      "films": 32
+    },
+    "val": {
+      "rows": 19379,
+      "start": "2018-08-24",
+      "end": "2018-09-29",
+      "films": 30
+    },
+    "test": {
+      "rows": 22764,
+      "start": "2018-09-30",
+      "end": "2018-11-04",
+      "films": 33
+    },
+    "test_films_unseen_in_train": 16
+  },
+  "baselines": {
+    "seasonal_naive (last same cinema/film/slot)": {
+      "MAE": 92.4946,
+      "RMSE": 197.0629,
+      "WAPE_pct": 74.8633,
+      "Occupancy_MAE": 0.1484,
+      "Asymmetric_Cost": 117.3235,
+      "Bias": -6.821,
+      "N": 22764
+    },
+    "hierarchical occupancy prior x capacity": {
+      "MAE": 75.9309,
+      "RMSE": 149.2851,
+      "WAPE_pct": 61.457,
+      "Occupancy_MAE": 0.121,
+      "Asymmetric_Cost": 94.6601,
+      "Bias": 1.0143,
+      "N": 22764
+    }
+  },
+  "final_model": {
+    "point": {
+      "MAE": 46.7414,
+      "RMSE": 104.3981,
+      "WAPE_pct": 37.8316,
+      "Occupancy_MAE": 0.0766,
+      "Asymmetric_Cost": 58.442,
+      "Bias": -0.0607,
+      "N": 22764
+    },
+    "interval": {
+      "coverage_pct": 80.0255,
+      "mean_width": 157.1028,
+      "mean_width_occupancy": 0.2608,
+      "below_lo_pct": 10.8373,
+      "above_hi_pct": 9.1372
+    },
+    "components": {
+      "pred_tickets_l1": {
+        "MAE": 46.8426,
+        "RMSE": 107.2205,
+        "WAPE_pct": 37.9134,
+        "Occupancy_MAE": 0.0778,
+        "Asymmetric_Cost": 62.656,
+        "Bias": -16.4112,
+        "N": 22764
+      },
+      "pred_log_l2": {
+        "MAE": 46.0293,
+        "RMSE": 105.2407,
+        "WAPE_pct": 37.2552,
+        "Occupancy_MAE": 0.0773,
+        "Asymmetric_Cost": 62.2186,
+        "Bias": -18.728,
+        "N": 22764
+      },
+      "pred_occupancy_xent": {
+        "MAE": 42.3191,
+        "RMSE": 90.9306,
+        "WAPE_pct": 34.2522,
+        "Occupancy_MAE": 0.0733,
+        "Asymmetric_Cost": 55.7262,
+        "Bias": -11.3094,
+        "N": 22764
+      }
+    },
+    "static_no_recalibration": {
+      "point": {
+        "MAE": 43.4947,
+        "RMSE": 96.7003,
+        "WAPE_pct": 35.2038,
+        "Occupancy_MAE": 0.074,
+        "Asymmetric_Cost": 58.2506,
+        "Bias": -15.5289,
+        "N": 22764
+      },
+      "interval": {
+        "coverage_pct": 74.0028,
+        "mean_width": 120.0499,
+        "mean_width_occupancy": 0.2027,
+        "below_lo_pct": 9.7962,
+        "above_hi_pct": 16.201
+      }
+    },
+    "blend_weights": {
+      "tickets_l1": 0.1,
+      "log_l2": 0.5,
+      "occupancy_xent": 0.4
+    },
+    "conformal_margins_log": {
+      "all": 0.12906862476377512,
+      "cold_film": 0.032757479740812556,
+      "established_film": 0.13146531502758485
+    },
+    "best_iterations": {
+      "tickets_l1": 245,
+      "log_l2": 1034,
+      "occupancy_xent": 1349,
+      "q_lo": 303,
+      "q_hi": 1410
+    }
+  },
+  "slices": {
+    "film_status": {
+      "established_film": {
+        "MAE": 45.7497,
+        "RMSE": 102.292,
+        "WAPE_pct": 37.6645,
+        "Occupancy_MAE": 0.0758,
+        "Asymmetric_Cost": 56.8076,
+        "Bias": 1.5179,
+        "N": 22411,
+        "coverage_pct": 80.3445,
+        "mean_width": 155.7085,
+        "mean_width_occupancy": 0.2607,
+        "below_lo_pct": 10.9277,
+        "above_hi_pct": 8.7279
+      },
+      "new_or_cold_film": {
+        "MAE": 109.7056,
+        "RMSE": 196.3052,
+        "WAPE_pct": 42.8656,
+        "Occupancy_MAE": 0.126,
+        "Asymmetric_Cost": 162.2023,
+        "Bias": -100.2809,
+        "N": 353,
+        "coverage_pct": 59.7734,
+        "mean_width": 245.6259,
+        "mean_width_occupancy": 0.2721,
+        "below_lo_pct": 5.0992,
+        "above_hi_pct": 35.1275
+      }
+    },
+    "capacity_bucket": {
+      "151-300": {
+        "MAE": 20.7115,
+        "RMSE": 32.5983,
+        "WAPE_pct": 43.1606,
+        "Occupancy_MAE": 0.0945,
+        "Asymmetric_Cost": 26.9362,
+        "Bias": -4.1871,
+        "N": 4309,
+        "coverage_pct": 81.4806,
+        "mean_width": 71.9963,
+        "mean_width_occupancy": 0.3243,
+        "below_lo_pct": 10.0951,
+        "above_hi_pct": 8.4242
+      },
+      "301-600": {
+        "MAE": 32.1018,
+        "RMSE": 53.8065,
+        "WAPE_pct": 39.581,
+        "Occupancy_MAE": 0.0736,
+        "Asymmetric_Cost": 41.2028,
+        "Bias": -4.3019,
+        "N": 5915,
+        "coverage_pct": 80.5579,
+        "mean_width": 107.2286,
+        "mean_width_occupancy": 0.2448,
+        "below_lo_pct": 10.262,
+        "above_hi_pct": 9.1801
+      },
+      "<=150": {
+        "MAE": 12.2612,
+        "RMSE": 18.1561,
+        "WAPE_pct": 41.2748,
+        "Occupancy_MAE": 0.1366,
+        "Asymmetric_Cost": 15.2279,
+        "Bias": 0.3947,
+        "N": 2507,
+        "coverage_pct": 81.9705,
+        "mean_width": 43.5653,
+        "mean_width_occupancy": 0.4868,
+        "below_lo_pct": 11.8069,
+        "above_hi_pct": 6.2226
+      },
+      ">600": {
+        "MAE": 75.1674,
+        "RMSE": 149.9439,
+        "WAPE_pct": 36.7604,
+        "Occupancy_MAE": 0.0557,
+        "Asymmetric_Cost": 92.9347,
+        "Bias": 4.0981,
+        "N": 10033,
+        "coverage_pct": 78.6006,
+        "mean_width": 251.4284,
+        "mean_width_occupancy": 0.1866,
+        "below_lo_pct": 11.2529,
+        "above_hi_pct": 10.1465
+      }
+    },
+    "weekday": {
+      "Fri": {
+        "MAE": 52.7816,
+        "RMSE": 115.6682,
+        "WAPE_pct": 31.4142,
+        "Occupancy_MAE": 0.0834,
+        "Asymmetric_Cost": 68.7815,
+        "Bias": -11.2183,
+        "N": 3517,
+        "coverage_pct": 84.7313,
+        "mean_width": 188.6332,
+        "mean_width_occupancy": 0.3077,
+        "below_lo_pct": 4.6346,
+        "above_hi_pct": 10.6341
+      },
+      "Mon": {
+        "MAE": 30.1489,
+        "RMSE": 74.02,
+        "WAPE_pct": 57.6354,
+        "Occupancy_MAE": 0.0529,
+        "Asymmetric_Cost": 33.6343,
+        "Bias": 16.2071,
+        "N": 2838,
+        "coverage_pct": 77.3784,
+        "mean_width": 101.1981,
+        "mean_width_occupancy": 0.188,
+        "below_lo_pct": 18.4285,
+        "above_hi_pct": 4.1931
+      },
+      "Sat": {
+        "MAE": 47.9935,
+        "RMSE": 114.3929,
+        "WAPE_pct": 45.4195,
+        "Occupancy_MAE": 0.0792,
+        "Asymmetric_Cost": 62.414,
+        "Bias": -9.6886,
+        "N": 3284,
+        "coverage_pct": 75.2741,
+        "mean_width": 135.0694,
+        "mean_width_occupancy": 0.2336,
+        "below_lo_pct": 13.8246,
+        "above_hi_pct": 10.9013
+      },
+      "Sun": {
+        "MAE": 30.8883,
+        "RMSE": 68.1149,
+        "WAPE_pct": 56.5589,
+        "Occupancy_MAE": 0.0542,
+        "Asymmetric_Cost": 34.4177,
+        "Bias": 16.7705,
+        "N": 3348,
+        "coverage_pct": 76.4038,
+        "mean_width": 98.3497,
+        "mean_width_occupancy": 0.182,
+        "below_lo_pct": 19.5042,
+        "above_hi_pct": 4.092
+      },
+      "Thu": {
+        "MAE": 48.7694,
+        "RMSE": 106.022,
+        "WAPE_pct": 33.1418,
+        "Occupancy_MAE": 0.0831,
+        "Asymmetric_Cost": 64.1454,
+        "Bias": -12.7343,
+        "N": 3566,
+        "coverage_pct": 81.8845,
+        "mean_width": 168.9464,
+        "mean_width_occupancy": 0.2808,
+        "below_lo_pct": 4.9075,
+        "above_hi_pct": 13.2081
+      },
+      "Tue": {
+        "MAE": 78.5221,
+        "RMSE": 144.3714,
+        "WAPE_pct": 30.899,
+        "Occupancy_MAE": 0.1185,
+        "Asymmetric_Cost": 100.6891,
+        "Bias": -10.1457,
+        "N": 2874,
+        "coverage_pct": 80.9325,
+        "mean_width": 272.4766,
+        "mean_width_occupancy": 0.4004,
+        "below_lo_pct": 5.8107,
+        "above_hi_pct": 13.2568
+      },
+      "Wed": {
+        "MAE": 39.6216,
+        "RMSE": 89.9601,
+        "WAPE_pct": 45.8787,
+        "Occupancy_MAE": 0.0666,
+        "Asymmetric_Cost": 46.3568,
+        "Bias": 12.6808,
+        "N": 3337,
+        "coverage_pct": 82.8589,
+        "mean_width": 140.0246,
+        "mean_width_occupancy": 0.2378,
+        "below_lo_pct": 9.9491,
+        "above_hi_pct": 7.1921
+      }
+    },
+    "slot": {
+      "1": {
+        "MAE": 19.1759,
+        "RMSE": 35.8512,
+        "WAPE_pct": 49.5951,
+        "Occupancy_MAE": 0.1075,
+        "Asymmetric_Cost": 25.504,
+        "Bias": -6.1366,
+        "N": 3992,
+        "coverage_pct": 80.1102,
+        "mean_width": 60.2488,
+        "mean_width_occupancy": 0.3449,
+        "below_lo_pct": 10.7214,
+        "above_hi_pct": 9.1683
+      },
+      "2": {
+        "MAE": 24.2384,
+        "RMSE": 44.7628,
+        "WAPE_pct": 43.5839,
+        "Occupancy_MAE": 0.0695,
+        "Asymmetric_Cost": 31.2671,
+        "Bias": -3.8762,
+        "N": 4664,
+        "coverage_pct": 81.9039,
+        "mean_width": 83.2078,
+        "mean_width_occupancy": 0.2452,
+        "below_lo_pct": 10.506,
+        "above_hi_pct": 7.5901
+      },
+      "3": {
+        "MAE": 32.581,
+        "RMSE": 57.3736,
+        "WAPE_pct": 41.7446,
+        "Occupancy_MAE": 0.0734,
+        "Asymmetric_Cost": 40.9381,
+        "Bias": -0.847,
+        "N": 4536,
+        "coverage_pct": 79.4974,
+        "mean_width": 107.4663,
+        "mean_width_occupancy": 0.2501,
+        "below_lo_pct": 11.5961,
+        "above_hi_pct": 8.9065
+      },
+      "4": {
+        "MAE": 47.4645,
+        "RMSE": 80.8242,
+        "WAPE_pct": 38.219,
+        "Occupancy_MAE": 0.0739,
+        "Asymmetric_Cost": 58.986,
+        "Bias": 1.3785,
+        "N": 3126,
+        "coverage_pct": 78.7588,
+        "mean_width": 160.5959,
+        "mean_width_occupancy": 0.2506,
+        "below_lo_pct": 11.6763,
+        "above_hi_pct": 9.5649
+      },
+      "5+": {
+        "MAE": 89.7087,
+        "RMSE": 175.3838,
+        "WAPE_pct": 34.9077,
+        "Occupancy_MAE": 0.0662,
+        "Asymmetric_Cost": 110.5563,
+        "Bias": 6.3182,
+        "N": 6446,
+        "coverage_pct": 79.5998,
+        "mean_width": 303.786,
+        "mean_width_occupancy": 0.2326,
+        "below_lo_pct": 10.2079,
+        "above_hi_pct": 10.1924
+      }
+    }
+  },
+  "validation": {
+    "point": {
+      "MAE": 27.8576,
+      "RMSE": 62.0836,
+      "WAPE_pct": 32.8824,
+      "Occupancy_MAE": 0.0508,
+      "Asymmetric_Cost": 35.0768,
+      "Bias": -1.0194,
+      "N": 19379
+    },
+    "interval": {
+      "coverage_pct": 77.4653,
+      "mean_width": 87.9552,
+      "mean_width_occupancy": 0.1571,
+      "below_lo_pct": 11.9459,
+      "above_hi_pct": 10.5888
+    }
+  }
+}
